@@ -1,8 +1,11 @@
 ﻿;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Includes
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
+OutputDebug, Includes
 #Include, %A_ScriptDir%/config.ahk
+OutputDebug, config loaded
 #Include, %A_ScriptDir%/GUIConfigurator.ahk
+OutputDebug, Configurator loaded
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Settings
@@ -16,7 +19,7 @@
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFERED_SHELL
 
-;------+------------------------------------------------------------------------------------------------------------------------------------------------------
+;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; GLOBAL VARIABLES
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 {	; AHKCompatability
@@ -52,7 +55,7 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 }
 {	; EnQuoteText
 	arrayContains(array, target) {	; Function to see if array contains value
-		OutputDebug Target: %target%
+		OutputDebug, Target: %target%
 		for index, value in array {	; Itertating over the index and values in the array
 			if RegExMatch(target, value) {	; Return the index if the value matches
 				return index
@@ -257,9 +260,13 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
+OutputDebug, Auto-execute
 #If VIRTUAL_DESKTOPS_ENABLED
+	OutputDebug, VIRTUAL_DESKTOPS_ENABLED
 	prepareRegistry()
 	makeNewDesktops(TOTAL_DESKTOPS)	; Ensure that there are the required number of virtual desktops
+	OutputDebug, Go to %INITIAL_DESKTOP%
+	Sleep 100
 	goToDesktop(INITIAL_DESKTOP)
 #If
 #If WINDOWS_FUNCTIONS_ENABLED
@@ -267,7 +274,7 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 	{
 		OutputDebug, Index: %A_Index% 
 		fn := Func("SendFKeys").Bind(A_Index+12)
-		Hotkey, !F%A_Index% , % fn
+		Hotkey, +F%A_Index% , % fn
 	}
 #If
 return
@@ -275,15 +282,19 @@ return
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; HOT-KEY BINDINGS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
+; Include Extra hotkeys after auto-execute
+#Include, %A_ScriptDir%/GameSpecifics.ahk
+OutputDebug, GameSpecifics loaded
+
 {	; AHK Compatability
-	^+SPACE:: 	; CTRL + SHIFT + SPACE will reload the script
+	^+SPACE:: 	; CTRL + SHIFT + SPACE will reload the script TODO add reload to all scripts
 		if (RELOAD_TRAYTIP) {
 			TrayTip AutoHotKey, Reloaded script "Main"
 		}
 		sleep 1000
 		reload ; CTRL + SHIFT + SPACE reloads scripts
 		return
-	#ScrollLock::
+	#ScrollLock:: ; TODO add susepnd to all scripts
 		Suspend ; WIN + SCROLLLOCK suspends AHK scripts
 		suspended := not suspended
 		if (suspended) {
@@ -426,10 +437,8 @@ return
 
 #if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker
 	#if autoClicker	; If an auto clicker is running, ESC will stop it
-		ESC::
+		ESC Up::
 			autoClicker := False
-			Send, {ESC UP}
-			Sleep, 200
 			Return
 	#if
 #if
@@ -446,8 +455,8 @@ return
 	^#WheelUp::Volume_Up		; CTRL + WIN + SCROLL_UP raises volume
 	^#MButton::Volume_Mute		; CTRL + WIN + MIDDLE_MOUSE mutes 
 	^+#MButton::Media_Play_Pause	; CTRL + SHIFT + WIN pauses/plays media
-	^+#WheelDown::Media_Prev	; CTRL + SHIFT + SCROLL_DOWN goes to previous track
-	^+#WheelUp::Media_Next		; CTRL + SHIFT + SCROLL_UP goes to next track
+	^+#WheelDown::Media_Prev	; CTRL + SHIFT + WIN + SCROLL_DOWN goes to previous track
+	^+#WheelUp::Media_Next		; CTRL + SHIFT + WIN + SCROLL_UP goes to next track
 #if
 
 #if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker

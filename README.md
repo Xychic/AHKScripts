@@ -95,7 +95,7 @@ Adds some nice functions that are I didn't really know how to group...
 |CTRL+SHIFT+GRAVE|Starts task manager as SHIFT+ESC types grave on my keyboard                                                                |  
 |WIN+DEL         |Empties the recycling bin                                                                                                  |  
 |WIN+SPACE       |Makes a window stick on top, even if it is not the active window                                                           |  
-|ALT+F1-F12      |Sends F13-24                                                                                                               |  
+|SHIFT+F1-F12      |Sends F13-24                                                                                                               |  
 
 ### Config settings
 |Variable Name           |Description                                         |Valid values                                                           |  
