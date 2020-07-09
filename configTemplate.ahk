@@ -24,3 +24,9 @@ PREFERED_SHELL = C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe  ; Fu
 
 ; MouseMediaControl
 MOUSE_MEDIA_CONTROL_ENABLED := True
+
+; MouseAutoClicker
+MOUSE_AUTO_CLICKER_ENABLED := True
+SCROLL_DELAY := 10
+LEFT_CLICK_DELAY := 5000
+RIGHT_CLICK_DELAY := 10

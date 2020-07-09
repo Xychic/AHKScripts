@@ -21,6 +21,10 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 {	; NumAsNumpad
 	numAsNumpad := False
 }
+
+{	; MouseAutoClicker
+	autoClicker := False
+}
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; FUNCTIONS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -379,6 +383,17 @@ return
 	#SPACE:: Winset, Alwaysontop, , A ; CTRL + SPACE makes a window always on top
 #if
 
+
+#if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker
+	#if autoClicker
+		ESC::
+			autoClicker := False
+			Send, {ESC UP}
+			sleep, 200
+			Return
+	#if
+#if
+
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; MOUSE-KEY BINDINGS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -390,4 +405,42 @@ return
 	^#WheelDown::Volume_Down	; CTRL + WIN + SCROLL_DOWN lowers volume
 	^#WheelUp::Volume_Up	; CTRL + WIN + SCROLL_UP raises volume
 	^#MButton::Media_Play_Pause	; CTRL + WIN + MIDDLE_MOUSE pauses/plays media
+#if
+
+#if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker
+	!+LButton:: ; ALT + SHIFT + LEFT_CLICK will continue clicking until ESC is pressed
+	autoClicker := True
+    loop {
+        if !autoClicker
+            Return
+        MouseClick, left
+        Sleep %LEFT_CLICK_DELAY%
+    }
+
+	!+RButton:: ; ALT + SHIFT + LEFT_CLICK will continue clicking until ESC is pressed
+	autoClicker := True
+    loop {
+        if !autoClicker
+            Return
+        MouseClick, right
+        Sleep %RIGHT_CLICK_DELAY%
+    }
+
+	!+WheelDown:: ; ALT + SHIFT + SCROLL will continue scrolling until ESC is pressed
+    autoClicker := True
+    loop {
+        if !autoClicker
+            Return
+        MouseClick, WheelDown
+        Sleep %SCROLL_DELAY%
+    }
+
+	!+WheelUp:: ; ALT + SHIFT + SCROLL will continue scrolling until ESC is pressed
+		autoClicker := True
+		loop {
+			if !autoClicker
+				Return
+			MouseClick, WheelUp
+			Sleep %SCROLL_DELAY%
+		}
 #if
