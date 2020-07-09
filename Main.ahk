@@ -13,6 +13,7 @@
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; GLOBAL CONSTANTS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL_DESKTOPS := ROWS * COLUMNS ; The total number of virtual desktops
 global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFERED_SHELL
 
 ;------+------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -256,8 +257,10 @@ return
 ; HOT-KEY BINDINGS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 {	; AHK Compatability
-	^+SPACE:: 
-		TrayTip AutoHotKey, Reloaded script "Main"
+	^+SPACE:: 	; CTRL + SHIFT + SPACE will reload the script
+		if (RELOAD_TRAYTIP) {
+			TrayTip AutoHotKey, Reloaded script "Main"
+		}
 		sleep 1000
 		reload ; CTRL + SHIFT + SPACE reloads scripts
 		return
@@ -337,11 +340,11 @@ return
 		oldClipboard := ClipboardAll   ; Save the entire clipboard to a variable
 		Send, ^c	; Copy the highlighted text
 		Sleep, 10
-		If InStr(clipboard, "http") {
+		If RegExMatch(clipboard, "^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$") { ; Check to see if it is a URL
 			Run, %clipBoard%
 		} else {
 			clipboard := UriEncode(clipboard)
-			Run, https://www.google.com/search?q=%clipboard%	; Search google for the highlighted text
+			Run, %SEARCH_ENGINE%%clipboard%	; Search google for the highlighted text
 		}
 		Clipboard := oldClipboard   ; Restoring the original clipboard
 		oldClipboard := ""   ; Free the memory in case the clipboard was very large.
@@ -352,7 +355,7 @@ return
 		oldClipboard = %clipBoardAll%	; Save the entire clipboard to a variable
 		clipBoard = %clipBoard%	; Convert to text
 		Send ^v		; Pasting the text
-		Sleep 10	; Don't change clipboard while it is pasted!
+		Sleep, 10	; Don't change clipboard while it is pasted!
 		clipBoard = %oldClipboard%	; Restore original ClipBoard
 		oldClipboard := ""	; Free memory
 	; ^+V
@@ -378,20 +381,20 @@ return
 		RunWait wscript.exe %fpath%
 		Return
 
-	^+¬::Run, C:\Windows\System32\Taskmgr.exe ; CTRL + WIN + GRAVE will open task manager
+	^+¬::Run, C:\Windows\System32\Taskmgr.exe ; CTRL + SHIFT + GRAVE will open task manager
 
 	#Del::FileRecycleEmpty ; WIND + DEL empties recycling bin
 
-	#SPACE:: Winset, Alwaysontop, , A ; CTRL + SPACE makes a window always on top
+	#SPACE:: Winset, Alwaysontop, , A ; WIN + SPACE makes a window always on top
 #if
 
 
 #if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker
-	#if autoClicker
+	#if autoClicker	; If an auto clicker is running, ESC will stop it
 		ESC::
 			autoClicker := False
 			Send, {ESC UP}
-			sleep, 200
+			Sleep, 200
 			Return
 	#if
 #if
@@ -419,7 +422,7 @@ return
         Sleep %LEFT_CLICK_DELAY%
     }
 
-	!+RButton:: ; ALT + SHIFT + LEFT_CLICK will continue clicking until ESC is pressed
+	!+RButton:: ; ALT + SHIFT + RIGHT_CLICK will continue clicking until ESC is pressed
 	autoClicker := True
     loop {
         if !autoClicker
@@ -485,6 +488,7 @@ return
 				clipBoard := NUMBERS[index]	; Load the desired value into the clipboard
 				Send, ^v
 				clipBoard := oldClipboard
+				oldClipboard := ""	; Free memory
 			}
 		}
 		return

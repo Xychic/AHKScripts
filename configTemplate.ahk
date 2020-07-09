@@ -4,6 +4,9 @@ Edit any variables and save as "config.akk"
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+; AHKCompatability
+RELOAD_TRAYTIP := True
+
 ; EnQuoteText
 ENQUOTE_ENABLED := True
 ENQUOTE_BLACKLIST := []  ; Programs to not enquote with text; comma seperated and enclosed in "speach" marks
@@ -15,7 +18,6 @@ NUM_AS_NUMPAD_ENABLED := True
 VIRTUAL_DESKTOPS_ENABLED := True
 ROWS := 3	; The number of virtual desktops in each row
 COLUMNS := 3 ; The number of virtual desktops in each column
-TOTAL_DESKTOPS := ROWS * COLUMNS ; The total number of virtual desktops
 INITIAL_DESKTOP := 5 ; The desktop that the computer will start on
 
 ; WindowsFunctions
