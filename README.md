@@ -120,6 +120,7 @@ Allows volume and play/pause control quickly with the mouse
 ## MouseAutoClicker
 Adds an autoclicker for left click, right click, and scroll.  
 
+### Keybindings 
 |Hotkey               |Action                                      |  
 |---------------------|--------------------------------------------|  
 |ALT+SHIFT+LEFT_CLICK |Repeatedly left clicks until ESC is pressed |  
@@ -127,6 +128,7 @@ Adds an autoclicker for left click, right click, and scroll.
 |ALT+SHIFT+SCROLL_UP  |Repeatedly scrolls up until ESC is pressed  |  
 |ALT+SHIFT+SCROLL_DOWN|Repeatedly scrolls down until ESC is pressed|  
 
+### Config settings 
 |Variable Name             |Description                                             |Valid values        |  
 |--------------------------|--------------------------------------------------------|--------------------|  
 |MOUSE_AUTO_CLICKER_ENABLED|Enables or disables the functions                       |"True","False"      |  
