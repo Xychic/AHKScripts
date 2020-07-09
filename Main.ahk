@@ -1,6 +1,7 @@
 ﻿;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Includes
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Include, %A_ScriptDir%/config.ahk
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Settings
@@ -12,21 +13,9 @@
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; GLOBAL CONSTANTS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-{	; EnQuoteText
-	ENQUOTE_BLACKLIST := ["Code", "cmd", "powershell"]
-}
-{	; VirtualDesktopSwitcher
-	ROWS := 3	; The number of virtual desktops in each row
-	COLUMNS := 3 ; The number of virtual desktops in each column
-	TOTAL_DESKTOPS := ROWS * COLUMNS ; The total number of virtual desktops
-	INITIAL_DESKTOP := 5 ; The desktop that the computer will start on
-}
-{	; WindowsFunctions
-	PREFERED_SHELL = C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-}
 global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFERED_SHELL
 
-;------------------------------------------------------------------------------------------------------------------------------------------------------------
+;------+------------------------------------------------------------------------------------------------------------------------------------------------------
 ; GLOBAL VARIABLES
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 {	; NumAsNumpad
@@ -252,16 +241,9 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-; RegWrite, REG_BINARY, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\%sessionID%\VirtualDesktops, CurrentVirtualDesktop, 00 ; Fixes issue where windows decides to delete the registry value
 prepareRegistry()
 makeNewDesktops(TOTAL_DESKTOPS)	; Ensure that there are the required number of virtual desktops
 goToDesktop(INITIAL_DESKTOP)
-; Loop {
-; 	Send ^#{Right}	; Move to the the initial desktop - Windows starts at desktop 1
-; 	if (A_Index = (INITIAL_DESKTOP-1)) {
-; 		Break
-; 	}
-; }
 return
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -276,16 +258,16 @@ return
 	#ScrollLock::Suspend ; WIN + SCROLLLOCK suspends AHK scripts
 }
 
-{	; EnQuoteText
+#if ENQUOTE_ENABLED		; EnQuoteText
 	$'::enQuote("'")	; Wraps highlighted text in single quotes 
 	$"::enQuote("""")	; Wraps highlighted text in doulbe quotes 
 	$`::enQuote("``")	; Wraps highlighted text in back ticks
 	$(::enQuote("(", ")")	; Wraps highlighted text in round brackets
 	${::enQuote("{","}")	; Wraps highlighted text in curly brackets
 	$[::enQuote("[","]")	; Wraps highlighted text in doulbe square brackets
-}
+#if
 
-{	; NumAsNumpad
+#if NUM_AS_NUMPAD_ENABLED	; NumAsNumpad
 	^F12::numAsNumpad := !numAsNumpad ; CTRL + F12 toggles number keys as numpad equivalent
 
 	#if numAsNumpad	; If numAsNumpad is true send the numpad equivalent of keys
@@ -318,21 +300,20 @@ return
 		+0::0
 		return
 	#if
-}
+#if
 
-{	; VirtualDesktopSwitcher
+#if VIRTUAL_DESKTOPS_ENABLED	; VirtualDesktopSwitcher
 	^#Up:: moveDesktop("up")		; Binding CTRL + WIN + UP to move up one desktop
 	^#Down:: moveDesktop("down")	; Binding CTRL + WIN + DOWN to move up down desktop
 	^#Left:: moveDesktop("left")	; Overwriting CTRL + WIN + LEFT 
 	^#Right:: moveDesktop("right")	; Overwriting CTRL + WIN + RIGHT 
-}
+#if
 
-{	; WindowsFunctions
+#if WINDOWS_FUNCTIONS_ENABLED	; WindowsFunctions
 	^!T::	; CTRL + ALT + T opens cmd shell at current directory
 		currentDir := getActiveExplorerPath()
 		Run, %PREFERED_SHELL%, %currentDir%
 		return
-	; ^!T
 
 	; $^D::	; CTRL + D Closes an active shell
 	; 	hwnd := WinExist("A")	; Getting the Handle Window for the active window
@@ -391,18 +372,17 @@ return
 		RunWait wscript.exe %fpath%
 		Return
 
-	^+¬::Run, C:\Windows\System32\Taskmgr.exe
+	^+¬::Run, C:\Windows\System32\Taskmgr.exe ; CTRL + WIN + GRAVE will open task manager
 
 	#Del::FileRecycleEmpty ; WIND + DEL empties recycling bin
 
 	#SPACE:: Winset, Alwaysontop, , A ; CTRL + SPACE makes a window always on top
+#if
 
-
-}
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; MOUSE-KEY BINDINGS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-{	; MouseMediaControl
+#if MOUSE_MEDIA_CONTROL_ENABLED	; MouseMediaControl
 	#IfWinActive, ahk_class CabinetWClass
 		~MButton::Send !{Up} 	; Middle mouse button moves explorer up a directory
 	#IfWinActive
@@ -410,6 +390,4 @@ return
 	^#WheelDown::Volume_Down	; CTRL + WIN + SCROLL_DOWN lowers volume
 	^#WheelUp::Volume_Up	; CTRL + WIN + SCROLL_UP raises volume
 	^#MButton::Media_Play_Pause	; CTRL + WIN + MIDDLE_MOUSE pauses/plays media
-}
-
-
+#if
