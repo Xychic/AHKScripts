@@ -9,7 +9,7 @@ RELOAD_TRAYTIP := True
 
 ; EnQuoteText
 ENQUOTE_ENABLED := True
-ENQUOTE_BLACKLIST := []  ; Programs to not enquote with text; comma seperated and enclosed in "speach" marks
+ENQUOTE_BLACKLIST := []  ; Programs to not enquote with text; comma seperated and enclosed in "speech" marks
 
 ; NumAsNumpad
 NUM_AS_NUMPAD_ENABLED := True 
