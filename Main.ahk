@@ -444,3 +444,46 @@ return
 			Sleep %SCROLL_DELAY%
 		}
 #if
+
+;------------------------------------------------------------------------------------------------------------------------------------------------------------
+; Text Replacement
+;------------------------------------------------------------------------------------------------------------------------------------------------------------
+#if TEXT_REPLACEMENT_ENABLED ; TextReplacement
+	~@::	; Typing `@` starts the listener
+		Input, userInput, V T10, {Space}	; Listen until a space is type, but continue typing
+
+		if RegExMatch(userInput, "^@[0-9]*$") {	; If the input starts with `@` 
+			backTrackLength := StrLen(userInput) + 2 ; Get the length of the typed text + an extra `@` and a space
+			maxIndex := EMAILS.MaxIndex()	; Find the maximum valid index
+			index := 1 + StrReplace(userInput, "@")	; Remove the leading `@` and add 1 to the integer value as AHK is 1-indexing
+
+			if (index <= maxIndex) {	; If the index is in the valid range
+				
+				Send, {backspace %backTrackLength%}%outputVal%	; Send backspaces to clear the hostring, followed by the desired text
+				oldClipboard = %clipBoardAll%	; Save the entire clipboard to a variable
+				clipBoard := EMAILS[index]	; Load the desired value into the clipboard
+				Send, ^v
+				clipBoard := oldClipboard
+			}
+		}
+		return
+
+	~#::	; Typing `#` starts the listener
+		Input, userInput, V T10, {Space}	; Listen until a space is type, but continue typing
+
+		if RegExMatch(userInput, "^#[0-9]*$") {	; If the input starts with `#` 
+			backTrackLength := StrLen(userInput) + 2 ; Get the length of the typed text + an extra `#` and a space
+			maxIndex := NUMBERS.MaxIndex()	; Find the maximum valid index
+			index := 1 + StrReplace(userInput, "#")	; Remove the leading `#` and add 1 to the integer value as AHK is 1-indexing
+
+			if (index <= maxIndex) {	; If the index is in the valid range
+				
+				Send, {backspace %backTrackLength%}%outputVal%	; Send backspaces to clear the hostring, followed by the desired text
+				oldClipboard = %clipBoardAll%	; Save the entire clipboard to a variable
+				clipBoard := NUMBERS[index]	; Load the desired value into the clipboard
+				Send, ^v
+				clipBoard := oldClipboard
+			}
+		}
+		return
+#if

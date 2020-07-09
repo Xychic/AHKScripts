@@ -30,3 +30,8 @@ MOUSE_AUTO_CLICKER_ENABLED := True
 SCROLL_DELAY := 10
 LEFT_CLICK_DELAY := 5000
 RIGHT_CLICK_DELAY := 10
+
+; TextReplacement
+TEXT_REPLACEMENT_ENABLED := True
+EMAILS := []    ; Emails for autoreplacement; comma seperated and enclosed in "speach" marks
+NUMBERS := []   ; phone numbers for autoreplacement; comma seperated and enclosed in "speach" marks
