@@ -245,9 +245,11 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-prepareRegistry()
-makeNewDesktops(TOTAL_DESKTOPS)	; Ensure that there are the required number of virtual desktops
-goToDesktop(INITIAL_DESKTOP)
+#if VIRTUAL_DESKTOPS_ENABLED
+	prepareRegistry()
+	makeNewDesktops(TOTAL_DESKTOPS)	; Ensure that there are the required number of virtual desktops
+	goToDesktop(INITIAL_DESKTOP)
+#If
 return
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
