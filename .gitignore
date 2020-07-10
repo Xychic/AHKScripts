@@ -3,3 +3,5 @@
 
 # Ignore the config file as it contains emails
 config.ahk
+
+!GUIControl/.*

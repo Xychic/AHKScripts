@@ -48,8 +48,9 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 }
 {	; EnQuoteText
 	arrayContains(array, target) {	; Function to see if array contains value
+		OutputDebug Target: %target%
 		for index, value in array {	; Itertating over the index and values in the array
-			if (target == value) {	; Return the index if the value matches
+			if RegExMatch(target, value) {	; Return the index if the value matches
 				return index
 			}
 		}
