@@ -105,7 +105,7 @@ Loop, Read, %srcFile%
 }
 Gui, 1:Add, Button, gAction xs+4 y+1 w245, Update
 
-Gui, 1:Show, w%WIDTH% , Configurator
+; Gui, 1:Show, w%WIDTH% , Configurator
 return
 
 Action:
@@ -153,8 +153,5 @@ Action:
     }
 
     FileMove, %A_ScriptDir%/config.tmp, %A_ScriptDir%/config.ahk, 1
-    return
-
-GuiClose:
-    ExitApp
+    reload
     return

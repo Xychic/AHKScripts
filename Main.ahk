@@ -2,6 +2,7 @@
 ; Includes
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Include, %A_ScriptDir%/config.ahk
+#Include, %A_ScriptDir%/GUIConfigurator.ahk
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Settings
@@ -266,6 +267,10 @@ return
 		reload ; CTRL + SHIFT + SPACE reloads scripts
 		return
 	#ScrollLock::Suspend ; WIN + SCROLLLOCK suspends AHK scripts
+
+	^!#C::
+		Gui, 1:Show, w%WIDTH% , Configurator
+		return
 }
 
 #if ENQUOTE_ENABLED		; EnQuoteText
