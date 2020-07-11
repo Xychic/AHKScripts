@@ -16,7 +16,7 @@ NUM_AS_NUMPAD_ENABLED := True ; (Bool)
 
 ; VirtualDesktopSwitcher
 VIRTUAL_DESKTOPS_ENABLED := True ; (Bool)
-ROWS := 3	; (Int) The number of virtual desktops in each row
+ROWS := 3 ; (Int) The number of virtual desktops in each row
 COLUMNS := 3 ; (Int) The number of virtual desktops in each column
 INITIAL_DESKTOP := 5 ; (Int) The desktop that the computer will start on
 
