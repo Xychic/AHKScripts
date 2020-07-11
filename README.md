@@ -16,10 +16,11 @@ This is the script I use to make windows act more like I want it to.
 A couple functions that allow quick editing and suspending of the script.  
 
 ### Keybindings  
-|Hotkey          |Action             |  
-|----------------|-------------------|  
-|CTRL+SHIFT+SPACE|Reloads the script |  
-|WIN+SCROLL_LOCK |Suspends the script|  
+|Hotkey          |Action               |  
+|----------------|---------------------|  
+|CTRL+SHIFT+SPACE|Reloads the script   |  
+|WIN+SCROLL_LOCK |Suspends the script  |  
+|CTRL+ALT+WIN+C  |Open GUI configurator|
 
 ### Config settings
 |Variable Name |Description                               |Valid values  |  
