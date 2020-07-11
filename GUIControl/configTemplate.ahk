@@ -1,6 +1,6 @@
 /*
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-Edit any variables and save as "config.akk"
+Edit any variables and save as "config.ahk"
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
@@ -36,5 +36,5 @@ RIGHT_CLICK_DELAY := 10 ; (Int)
 
 ; TextReplacement
 TEXT_REPLACEMENT_ENABLED := True ; (Bool)
-EMAILS := ["me@mail.com","me2@example.com"] ; (Array)
-NUMBERS := ["0123456789","0987654321"] ; (Array)
+EMAILS := ["me@mail.com", "me2@example.com"] ; (Array)
+NUMBERS := ["0123456789", "0987654321"] ; (Array)
