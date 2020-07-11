@@ -36,5 +36,5 @@ RIGHT_CLICK_DELAY := 10 ; (Int)
 
 ; TextReplacement
 TEXT_REPLACEMENT_ENABLED := True ; (Bool)
-EMAILS := ["jacob11turner@gmail.com", "jht517@york.ac.uk", "somekidsomewhere123@gmail.com", "cyber@yusu.org"] ; (Array)
-NUMBERS := ["07736220415", "01132695994"] ; (Array)
+EMAILS := ["me@mail.com","me2@example.com"] ; (Array)
+NUMBERS := ["0123456789","0987654321"] ; (Array)

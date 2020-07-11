@@ -1,6 +1,7 @@
 #SingleInstance, force
 
 arrName := []
+dataType := []
 tabVal := 0
 arrMaxIndex := 0
 
@@ -38,30 +39,46 @@ Loop, read, %A_ScriptDir%/configTest.ahk
         arrname.Insert(arrMaxIndex, varName)
 
         if InStr(A_LoopReadLine, "(Bool)") {
+            dataType.Insert(arrMaxIndex, "Bool")
+
             if InStr(A_LoopReadLine, "True") { 
                 options := "True||False"
             } else {
                 options := "True|False||"
             }
             Gui, 1:Add, ComboBox, x+2 v%varName% w245 h60-, %options%
+
+
         } else if InStr(A_LoopReadLine, "(Str)") {
+            dataType.Insert(arrMaxIndex, "Str")
+
             pos1 := InStr(A_LoopReadLine, """") + 1
             pos2 := InStr(A_LoopReadLine, """",, 0)
             currText := SubStr(A_LoopReadLine, pos1, pos2-pos1)
 
             Gui, 1:Add, Edit, x+2 -wrap v%varName% w245 r1, %currText%
+
+
         } else if InStr(A_LoopReadLine, "(Int)") {
+            dataType.Insert(arrMaxIndex, "Int")
+            
             pos1 := InStr(A_LoopReadLine, ":=") + 2
             pos2 := InStr(A_LoopReadLine, "`;",, 0)
             currText := StrReplace(SubStr(A_LoopReadLine, pos1, pos2-pos1), A_Space, "")
 
             Gui, 1:Add, Edit, x+2 -wrap Number v%varName% w245 r1, %currText%
+
+
         } else if InStr(A_LoopReadLine, "(Array)") {
+            dataType.Insert(arrMaxIndex, "Array")
+
             pos1 := InStr(A_LoopReadLine, "[") + 1
             pos2 := InStr(A_LoopReadLine, "]",, 0)
             currText := StrReplace(SubStr(A_LoopReadLine, pos1, pos2-pos1), """", "")
 
             Gui, 1:Add, Edit, x+2 -wrap v%varName% w245 r1, %currText%
+
+
         } else {
             Gui, 1:Add, ComboBox, x+2 v%varName% w245 h60-, TODO||TODO2
         }
@@ -70,7 +87,6 @@ Loop, read, %A_ScriptDir%/configTest.ahk
 }
 Gui, 1:Add, Button, gAction xs+4 y+1 w245, Update
 
- 
 Gui, 1:Show, w%WIDTH% ,
 return
 
@@ -80,7 +96,8 @@ Action:
     Loop %arrMaxIndex%
     {
         a := arrName[A_Index]
-        OutputDebug, % %a%
+        b := dataType[A_Index]
+        OutputDebug, % b " " %a% 
     }
     return
 
