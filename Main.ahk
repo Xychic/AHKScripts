@@ -408,8 +408,11 @@ return
 	#IfWinActive
 
 	^#WheelDown::Volume_Down	; CTRL + WIN + SCROLL_DOWN lowers volume
-	^#WheelUp::Volume_Up	; CTRL + WIN + SCROLL_UP raises volume
-	^#MButton::Media_Play_Pause	; CTRL + WIN + MIDDLE_MOUSE pauses/plays media
+	^#WheelUp::Volume_Up		; CTRL + WIN + SCROLL_UP raises volume
+	^#MButton::Volume_Mute		; CTRL + WIN + MIDDLE_MOUSE mutes 
+	^+#MButton::Media_Play_Pause	; CTRL + SHIFT + WIN pauses/plays media
+	^+#WheelDown::Media_Prev	; CTRL + SHIFT + SCROLL_DOWN goes to previous track
+	^+#WheelUp::Media_Next		; CTRL + SHIFT + SCROLL_UP goes to next track
 #if
 
 #if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker

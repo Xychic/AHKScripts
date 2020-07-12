@@ -106,11 +106,14 @@ Adds some nice functions that are I didn't really know how to group...
 Allows volume and play/pause control quickly with the mouse
 
 ### Keybindings  
-|Hotkey               |Action      |  
-|---------------------|------------|  
-|CTRL+WIN+SCROLL_UP   |Volume up   |  
-|CTRL+WIN+SCROLL_DOWN |Volume down |  
-|CTRL+WIN+MIDDLE_CLICK|Play/Pause  |  
+|Hotkey                     |Action      |  
+|---------------------------|------------|  
+|CTRL+WIN+SCROLL_UP         |Volume up   |  
+|CTRL+WIN+SCROLL_DOWN       |Volume down |  
+|CTRL+WIN+MIDDLE_CLICK      |Mute        |  
+|CTRL+SHIFT+WIN+SCROLL_UP   |Next        |  
+|CTRL+SHIFT+WIN+SCROLL_DOWN |Previous    |  
+|CTRL+SHIFT+WIN+MIDDLE_CLICK|Play/Pause  |
 
 ### Config settings  
 |Variable Name              |Description                      |Valid values  |  
