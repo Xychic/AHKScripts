@@ -386,6 +386,8 @@ return
 	#Del::FileRecycleEmpty ; WIND + DEL empties recycling bin
 
 	#SPACE:: Winset, Alwaysontop, , A ; WIN + SPACE makes a window always on top
+	
+	; TODO Force space play/pause for certain applications
 #if
 
 
