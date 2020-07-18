@@ -14,12 +14,15 @@
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; GLOBAL CONSTANTS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-TOTAL_DESKTOPS := ROWS * COLUMNS ; The total number of virtual desktops
 global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFERED_SHELL
 
 ;------+------------------------------------------------------------------------------------------------------------------------------------------------------
 ; GLOBAL VARIABLES
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
+{	; AHKCompatability
+	suspended := False
+}
+
 {	; NumAsNumpad
 	numAsNumpad := False
 }
@@ -97,10 +100,10 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 		return sessionId
 	}
 
-	prepareRegistry() {		; Fixes issues where the 
+	prepareRegistry() {		; Fixes issues where the registry has missing items
 		sessionID := getSessionID()
-		RegRead, regVal, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\%sessionID%\VirtualDesktops, CurrentVirtualDesktop	; Trying to read the the registry values
-		if (regVal == "") {	; If the value is empty, create a new desktop to refresh it
+		RegRead, currentDesktopID, HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\SessionInfo\%sessionID%\VirtualDesktops, CurrentVirtualDesktop
+		if (not StrLen(currentDesktopID)) {
 			Send ^#d
 		}
 		return
@@ -266,10 +269,20 @@ return
 		sleep 1000
 		reload ; CTRL + SHIFT + SPACE reloads scripts
 		return
-	#ScrollLock::Suspend ; WIN + SCROLLLOCK suspends AHK scripts
+	#ScrollLock::
+		Suspend ; WIN + SCROLLLOCK suspends AHK scripts
+		suspended := not suspended
+		if (suspended) {
+			TrayTip AutoHotKey, Suspending script
+		} else {
+			TrayTip, AutoHotKey, Resuming script
+		}
+		Sleep 1500
+		HideTrayTip()
+		return
 
 	^!#C::
-		Gui, 1:Show, w%WIDTH% , Configurator
+		Gui, 1:Show, w520 , Configurator
 		return
 }
 
