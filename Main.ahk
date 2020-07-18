@@ -246,15 +246,29 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 		SetFormat, IntegerFast, %f%
 		Return, encoded
 	}	
+
+	SendFKeys(FKeyIndex) {
+		SendLevel, 2
+		Send {F%FKeyIndex%}
+		return
+	}
 }
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-#if VIRTUAL_DESKTOPS_ENABLED
+#If VIRTUAL_DESKTOPS_ENABLED
 	prepareRegistry()
 	makeNewDesktops(TOTAL_DESKTOPS)	; Ensure that there are the required number of virtual desktops
 	goToDesktop(INITIAL_DESKTOP)
+#If
+#If WINDOWS_FUNCTIONS_ENABLED
+	Loop, 12
+	{
+		OutputDebug, Index: %A_Index% 
+		fn := Func("SendFKeys").Bind(A_Index+12)
+		Hotkey, !F%A_Index% , % fn
+	}
 #If
 return
 
@@ -281,7 +295,7 @@ return
 		HideTrayTip()
 		return
 
-	^!#C::
+	^!#C:: ; CTRL + ALT + WIN + C launches the configurator
 		Gui, 1:Show, w520 , Configurator
 		return
 }

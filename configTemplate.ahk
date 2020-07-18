@@ -8,10 +8,8 @@ Please don't edit manually: Press `CTRL+WIN+ALT+C` to launch the configurator
 RELOAD_TRAYTIP := True ; (Bool)
 
 ; EnQuoteText
-
 ENQUOTE_ENABLED := True ; (Bool)
 ENQUOTE_BLACKLIST := [] ; (Array) Programs to not enquote with text
-
 
 ; NumAsNumpad
 NUM_AS_NUMPAD_ENABLED := True ; (Bool) 
