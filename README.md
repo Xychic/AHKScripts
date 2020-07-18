@@ -107,11 +107,14 @@ Adds some nice functions that are I didn't really know how to group...
 Allows volume and play/pause control quickly with the mouse
 
 ### Keybindings  
-|Hotkey               |Action      |  
-|---------------------|------------|  
-|CTRL+WIN+SCROLL_UP   |Volume up   |  
-|CTRL+WIN+SCROLL_DOWN |Volume down |  
-|CTRL+WIN+MIDDLE_CLICK|Play/Pause  |  
+|Hotkey                     |Action      |  
+|---------------------------|------------|  
+|CTRL+WIN+SCROLL_UP         |Volume up   |  
+|CTRL+WIN+SCROLL_DOWN       |Volume down |  
+|CTRL+WIN+MIDDLE_CLICK      |Mute        |  
+|CTRL+SHIFT+WIN+SCROLL_UP   |Next        |  
+|CTRL+SHIFT+WIN+SCROLL_DOWN |Previous    |  
+|CTRL+SHIFT+WIN+MIDDLE_CLICK|Play/Pause  |
 
 ### Config settings  
 |Variable Name              |Description                      |Valid values  |  
@@ -121,6 +124,7 @@ Allows volume and play/pause control quickly with the mouse
 ## MouseAutoClicker
 Adds an autoclicker for left click, right click, and scroll.  
 
+### Keybindings 
 |Hotkey               |Action                                      |  
 |---------------------|--------------------------------------------|  
 |ALT+SHIFT+LEFT_CLICK |Repeatedly left clicks until ESC is pressed |  
@@ -128,6 +132,7 @@ Adds an autoclicker for left click, right click, and scroll.
 |ALT+SHIFT+SCROLL_UP  |Repeatedly scrolls up until ESC is pressed  |  
 |ALT+SHIFT+SCROLL_DOWN|Repeatedly scrolls down until ESC is pressed|  
 
+### Config settings 
 |Variable Name             |Description                                             |Valid values        |  
 |--------------------------|--------------------------------------------------------|--------------------|  
 |MOUSE_AUTO_CLICKER_ENABLED|Enables or disables the functions                       |"True","False"      |  
