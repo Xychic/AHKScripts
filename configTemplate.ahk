@@ -1,6 +1,6 @@
 /*
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-Edit any variables and save as "config.ahk"
+Please don't edit manually: Press `CTRL+WIN+ALT+C` to launch the configurator
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
@@ -21,6 +21,7 @@ VIRTUAL_DESKTOPS_ENABLED := True ; (Bool)
 ROWS := 3 ; (Int) The number of virtual desktops in each row
 COLUMNS := 3 ; (Int) The number of virtual desktops in each column
 INITIAL_DESKTOP := 5 ; (Int) The desktop that the computer will start on
+TOTAL_DESKTOPS := ROWS*COLUMNS ; (Ignore) The total number of virtual desktops
 
 ; WindowsFunctions
 WINDOWS_FUNCTIONS_ENABLED := True ; (Bool)
