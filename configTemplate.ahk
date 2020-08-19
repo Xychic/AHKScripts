@@ -25,6 +25,7 @@ TOTAL_DESKTOPS := ROWS*COLUMNS ; (Ignore) The total number of virtual desktops
 WINDOWS_FUNCTIONS_ENABLED := True ; (Bool)
 SEARCH_ENGINE := "https://www.google.com/search?q=" ; (Str)
 PREFERED_SHELL := "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" ; (Str) Full directory path to preferred shell
+BRIGHTNESS_DELTA := 10 ; (Int)
 
 ; MouseMediaControl
 MOUSE_MEDIA_CONTROL_ENABLED := True ; (Bool)

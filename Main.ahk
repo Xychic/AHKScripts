@@ -6,6 +6,8 @@ OutputDebug, Includes
 OutputDebug, config loaded
 #Include, %A_ScriptDir%/GUIConfigurator.ahk
 OutputDebug, Configurator loaded
+#Include, %A_ScriptDir%/BrightnessSetter.ahk
+OutputDebug, BrightnessSetter loaded
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Settings
@@ -255,8 +257,21 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 		Send {F%FKeyIndex%}
 		return
 	}
-}
 
+	runCommand(command) {
+		DetectHiddenWindows On
+		Run powershell,, Hide, pid
+		WinWait ahk_pid %pid%
+		DllCall("AttachConsole", "UInt", pid)
+
+		result := ComObjCreate("WScript.Shell").Exec("powershell.exe -NoLogo -NoProfile -Command " command).StdOut.ReadAll()
+
+		DllCall("FreeConsole")
+		Process Close, %pid%
+
+		return result
+	}
+}
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -430,6 +445,9 @@ OutputDebug, GameSpecifics loaded
 	#Del::FileRecycleEmpty ; WIND + DEL empties recycling bin
 
 	#SPACE:: Winset, Alwaysontop, , A ; WIN + SPACE makes a window always on top
+
+	#F11::BrightnessSetter.SetBrightness(-BRIGHTNESS_DELTA)
+	#F12::BrightnessSetter.SetBrightness(BRIGHTNESS_DELTA)
 	
 	; TODO Force space play/pause for certain applications
 #if
