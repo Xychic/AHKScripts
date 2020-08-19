@@ -285,7 +285,7 @@ return
 ; Include Extra hotkeys after auto-execute
 #Include, %A_ScriptDir%/GameSpecifics.ahk
 OutputDebug, GameSpecifics loaded
-
+; TODO https://www.autohotkey.com/boards/viewtopic.php?t=26921&p=126135
 {	; AHK Compatability
 	^+SPACE:: 	; CTRL + SHIFT + SPACE will reload the script TODO add reload to all scripts
 		if (RELOAD_TRAYTIP) {
