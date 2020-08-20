@@ -449,6 +449,9 @@ OutputDebug, GameSpecifics loaded
 	#F11::BrightnessSetter.SetBrightness(-BRIGHTNESS_DELTA)
 	#F12::BrightnessSetter.SetBrightness(BRIGHTNESS_DELTA)
 	
+	#IfWinActive, ahk_class CabinetWClass
+		~MButton::Send !{Up} 	; Middle mouse button moves explorer up a directory
+	#IfWinActive
 	; TODO Force space play/pause for certain applications
 #if
 
@@ -465,17 +468,21 @@ OutputDebug, GameSpecifics loaded
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; MOUSE-KEY BINDINGS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-#if MOUSE_MEDIA_CONTROL_ENABLED	; MouseMediaControl
-	#IfWinActive, ahk_class CabinetWClass
-		~MButton::Send !{Up} 	; Middle mouse button moves explorer up a directory
-	#IfWinActive
-
-	^#WheelDown::Volume_Down	; CTRL + WIN + SCROLL_DOWN lowers volume
-	^#WheelUp::Volume_Up		; CTRL + WIN + SCROLL_UP raises volume
+#if MOUSE_MEDIA_CONTROL_ENABLED	; MouseMediaControl	
+	#if INVERT_SCROLL
+		^#WheelDown::Volume_UP	; CTRL + WIN + SCROLL_DOWN raised volume
+		^#WheelUp::Volume_Down		; CTRL + WIN + SCROLL_UP lowers volume
+		^+#WheelDown::Media_Next	; CTRL + SHIFT + WIN + SCROLL_DOWN goes to next track
+		^+#WheelUp::Media_Prev	; CTRL + SHIFT + WIN + SCROLL_UP goes to previous track
+	#if
+	#if !INVERT_SCROLL
+		^#WheelDown::Volume_Down	; CTRL + WIN + SCROLL_DOWN lowers volume
+		^#WheelUp::Volume_Up		; CTRL + WIN + SCROLL_UP raises volume
+		^+#WheelDown::Media_Prev	; CTRL + SHIFT + WIN + SCROLL_DOWN goes to previous track
+		^+#WheelUp::Media_Next		; CTRL + SHIFT + WIN + SCROLL_UP goes to next track
+	#if
 	^#MButton::Volume_Mute		; CTRL + WIN + MIDDLE_MOUSE mutes 
-	^+#MButton::Media_Play_Pause	; CTRL + SHIFT + WIN pauses/plays media
-	^+#WheelDown::Media_Prev	; CTRL + SHIFT + WIN + SCROLL_DOWN goes to previous track
-	^+#WheelUp::Media_Next		; CTRL + SHIFT + WIN + SCROLL_UP goes to next track
+	^+#MButton::Media_Play_Pause	; CTRL + SHIFT + WIN pauses/plays media	
 #if
 
 #if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker

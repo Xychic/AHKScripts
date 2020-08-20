@@ -122,6 +122,7 @@ Allows volume and play/pause control quickly with the mouse
 |Variable Name              |Description                      |Valid values  |  
 |---------------------------|---------------------------------|--------------|  
 |MOUSE_MEDIA_CONTROL_ENABLED|Enables or disables the functions|"True","False"|  
+|INVERT_SCROLL              |Toggle the direction of scroll   |"True","False"|
 
 ## MouseAutoClicker
 Adds an autoclicker for left click, right click, and scroll.  
