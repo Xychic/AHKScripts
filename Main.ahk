@@ -455,7 +455,8 @@ OutputDebug, GameSpecifics loaded
 
 #if MOUSE_AUTO_CLICKER_ENABLED	; MouseAutoClicker
 	#if autoClicker	; If an auto clicker is running, ESC will stop it
-		ESC Up::
+		+ESC::
+		+¬::
 			autoClicker := False
 			Return
 	#if

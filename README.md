@@ -103,6 +103,7 @@ Adds some nice functions that are I didn't really know how to group...
 |WINDOWS_FUNCTIONS_ENABLED|Enables or disables the functions                  |"True","False"                                                         |  
 |SEARCH_ENGINE            |The string that prefixes the search term           |"https://www.google.com/search?q=","https://www.bing.com/search?q=",etc|  
 |PREFERED_SHELL           |The full directory path to the preferred shell     |"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe","%comspec%"|
+|BRIGHTNESS_DELTA         |The percent the brightness will change by          |"1","2",...,"100"                                                      |
 
 ## MouseMediaControl
 Allows volume and play/pause control quickly with the mouse
