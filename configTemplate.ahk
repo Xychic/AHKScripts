@@ -29,6 +29,7 @@ BRIGHTNESS_DELTA := 10 ; (Int)
 
 ; MouseMediaControl
 MOUSE_MEDIA_CONTROL_ENABLED := True ; (Bool)
+INVERT_SCROLL := False ; (Bool)
 
 ; MouseAutoClicker
 MOUSE_AUTO_CLICKER_ENABLED := True ; (Bool)
