@@ -399,11 +399,11 @@ OutputDebug, GameSpecifics loaded
 		oldClipboard := ClipboardAll   ; Save the entire clipboard to a variable
 		Send, ^c	; Copy the highlighted text
 		Sleep, 10
-		If RegExMatch(clipboard, "^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$") { ; Check to see if it is a URL
+		If RegExMatch(clipboard, "^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$") { ; Check to see if it is a URL
 			Run, %clipBoard%
 		} else {
 			clipboard := UriEncode(clipboard)
-			Run, %SEARCH_ENGINE%%clipboard%	; Search google for the highlighted text
+			Run, %SEARCH_ENGINE%%clipboard%	; Search the web for the highlighted text
 		}
 		Clipboard := oldClipboard   ; Restoring the original clipboard
 		oldClipboard := ""   ; Free the memory in case the clipboard was very large.
