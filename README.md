@@ -88,6 +88,7 @@ Adds some nice functions that are I didn't really know how to group...
 |Hotkey          |Action                                                                                                                     |  
 |----------------|---------------------------------------------------------------------------------------------------------------------------|  
 |CTRL+ALT+T      |Opens a command shell in the active directory in an explorer window or C:\\ if none are active                             |  
+|CTRL+D          |Closes the current command shell                                                                                           |
 |CTRL+SHIFT+C    |Will search for any highlighted text, or if no text is highlighted; the clipboard. If the text is a URL, just go to the URL|  
 |CTRL+SHIFT+V    |Will paste clipboard as plaintext                                                                                          |  
 |WIN+V           |Will open up VLC with a network stream to highlighted text or clipboard, useful for watching YouTube videos as a pop-out   |  
@@ -95,7 +96,7 @@ Adds some nice functions that are I didn't really know how to group...
 |CTRL+SHIFT+GRAVE|Starts task manager as SHIFT+ESC types grave on my keyboard                                                                |  
 |WIN+DEL         |Empties the recycling bin                                                                                                  |  
 |WIN+SPACE       |Makes a window stick on top, even if it is not the active window                                                           |  
-|SHIFT+F1-F12      |Sends F13-24                                                                                                               |  
+|SHIFT+F1-F12    |Sends F13-24                                                                                                               |  
 
 ### Config settings
 |Variable Name           |Description                                         |Valid values                                                           |  

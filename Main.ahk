@@ -383,18 +383,16 @@ OutputDebug, GameSpecifics loaded
 		Run, %PREFERED_SHELL%, %currentDir%
 		return
 
-	; $^D::	; CTRL + D Closes an active shell
-	; 	hwnd := WinExist("A")	; Getting the Handle Window for the active window
-	; 	WinGet, process, processName, % "ahk_id" hwnd	; Getting the name of the active process that owns the active window
-	; 	SplitPath, PREFERED_SHELL, shell	; Getting the name of the system shell
-	; 	if (process = shell) {	
-	; 		WinClose % "ahk_id" hwnd	; Close the active window if it is the system shell
-	; 	} else {
-	; 		send ^D
-	; 	}
-	; 	return
-	; ; ^D
-
+	$^D::	; CTRL + D Closes an active shell
+		hwnd := WinExist("A")	; Getting the Handle Window for the active window
+		WinGet, process, processName, % "ahk_id" hwnd	; Getting the name of the active process that owns the active window
+		SplitPath, PREFERED_SHELL, shell	; Getting the name of the system shell
+		if (process = shell) {	
+			Send ^a{Del}exit{Enter}
+		} else {
+			send ^D
+		}
+		return
 	^+C::	; CTRL + SHIFT + C will search for highlighted text
 		oldClipboard := ClipboardAll   ; Save the entire clipboard to a variable
 		Send, ^c	; Copy the highlighted text
