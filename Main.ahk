@@ -425,9 +425,9 @@ OutputDebug, GameSpecifics loaded
 		clipboard := ""	; Empty the clipboard
 		Send, ^c	; Copy the highlighted text
 		if (clipboard != "") {	; If the clipboard is empty, and the clipboard is text
-			Run vlc %clipboard%	--qt-minimal-view --width=352 --height=265	; Open VLC stream to highlighted link with minimal interface
+			Run C:\Program Files\VideoLAN\VLC\vlc.exe %clipboard%	--qt-minimal-view --width=352 --height=265	; Open VLC stream to highlighted link with minimal interface
 		} else {
-			Run vlc %oldPlainText% --qt-minimal-view --width=352 --height=265
+			Run C:\Program Files\VideoLAN\VLC\vlc.exe %oldPlainText% --qt-minimal-view --width=352 --height=265
 		}
 		clipboard := oldClipboard   ; Restoring the original clipboard
 		oldClipboard := ""   ; Free the memory in case the clipboard was very large.
