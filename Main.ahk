@@ -271,6 +271,11 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 
 		return result
 	}
+
+	ProcessExist(Name) {
+		Process, Exist, %Name%
+		return Errorlevel
+	}
 }
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
@@ -383,22 +388,26 @@ OutputDebug, GameSpecifics loaded
 		Run, %PREFERED_SHELL%, %currentDir%
 		return
 
-	$^D::	; CTRL + D Closes an active shell
-		hwnd := WinExist("A")	; Getting the Handle Window for the active window
-		WinGet, process, processName, % "ahk_id" hwnd	; Getting the name of the active process that owns the active window
-		SplitPath, PREFERED_SHELL, shell	; Getting the name of the system shell
-		if (process = shell) {	
-			Send ^a{Del}exit{Enter}
-		} else {
-			send ^D
-		}
-		return
+	; $^D Up::	; CTRL + D Closes an active shell
+	; 	hwnd := WinExist("A")	; Getting the Handle Window for the active window
+	; 	WinGet, process, processName, % "ahk_id" hwnd	; Getting the name of the active process that owns the active window
+	; 	SplitPath, PREFERED_SHELL, shell	; Getting the name of the system shell
+	; 	if (process = shell) {	
+	; 		Send ^a{Del}exit{Enter}
+	; 	} else {
+	; 		send ^D
+	; 	}
+	; 	return
 	^+C::	; CTRL + SHIFT + C will search for highlighted text
 		oldClipboard := ClipboardAll   ; Save the entire clipboard to a variable
 		Send, ^c	; Copy the highlighted text
 		Sleep, 10
 		If RegExMatch(clipboard, "^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$") { ; Check to see if it is a URL
-			Run, %clipBoard%
+			if RegExMatch(clipboard, "http.*") {
+				Run, %clipBoard%
+			} else {
+				Run, http://%clipBoard%
+			}
 		} else {
 			clipboard := UriEncode(clipboard)
 			Run, %SEARCH_ENGINE%%clipboard%	; Search the web for the highlighted text
@@ -415,20 +424,40 @@ OutputDebug, GameSpecifics loaded
 		Sleep, 10	; Don't change clipboard while it is pasted!
 		clipBoard = %oldClipboard%	; Restore original ClipBoard
 		oldClipboard := ""	; Free memory
+		return
 	; ^+V
 
-	#V::	; WIN + V will open up VLC streaming to copied or highlighted URL
-		oldClipboard := clipboardAll   ; Save the entire clipboard to a variable 
-		oldPlainText := clipBoard
-		clipboard := ""	; Empty the clipboard
-		Send, ^c	; Copy the highlighted text
-		if (clipboard != "") {	; If the clipboard is empty, and the clipboard is text
-			Run C:\Program Files\VideoLAN\VLC\vlc.exe %clipboard%	--qt-minimal-view --width=352 --height=265	; Open VLC stream to highlighted link with minimal interface
-		} else {
-			Run C:\Program Files\VideoLAN\VLC\vlc.exe %oldPlainText% --qt-minimal-view --width=352 --height=265
-		}
-		clipboard := oldClipboard   ; Restoring the original clipboard
-		oldClipboard := ""   ; Free the memory in case the clipboard was very large.
+	; #V::	; WIN + V will open up VLC streaming to copied or highlighted URL
+	; 	oldClipboard := clipboardAll   ; Save the entire clipboard to a variable 
+	; 	oldPlainText := clipBoard
+	; 	clipboard := ""	; Empty the clipboard
+	; 	Send, ^c	; Copy the highlighted text
+	; 	if (clipboard != "") {	; If the clipboard is empty, and the clipboard is text
+	; 		Run C:\Program Files\VideoLAN\VLC\vlc.exe %clipboard%	--qt-minimal-view --width=352 --height=265	; Open VLC stream to highlighted link with minimal interface
+	; 	} else {
+	; 		Run C:\Program Files\VideoLAN\VLC\vlc.exe %oldPlainText% --qt-minimal-view --width=352 --height=265
+	; 	}
+	; 	clipboard := oldClipboard   ; Restoring the original clipboard
+	; 	oldClipboard := ""   ; Free the memory in case the clipboard was very large.
+	; 	return
+	; ; #V
+
+	#Volume_Mute::	; WIN + MUTE mutes microphone
+		Soundset, +50, Master, Mute, MIC_MIXER_NO
+		return
+	#Volume_Up::	; WIN + MUTE mutes microphone
+		Soundset, +5, Master, Volume, MIC_MIXER_NO
+		return
+	#Volume_Down::	; WIN + MUTE mutes microphone
+		Soundset, -5, Master, Volume, MIC_MIXER_NO
+		return
+	$F24::
+		If ProcessExist("Discord.exe")
+			Send, {F24}
+		else
+			Send, {Volume_Down}
+			Send, {Volume_Up}
+			Soundset, +50, Master, Mute, MIC_MIXER_NO
 		return
 
 	^#DEL::		; CTRL + WIN + DEL will open shutdown dialogue
@@ -442,7 +471,7 @@ OutputDebug, GameSpecifics loaded
 
 	#Del::FileRecycleEmpty ; WIND + DEL empties recycling bin
 
-	#SPACE:: Winset, Alwaysontop, , A ; WIN + SPACE makes a window always on top
+	#SPACE:: Winset, Alwaysontop, ,A ; WIN + SPACE makes a window always on top
 
 	#F11::BrightnessSetter.SetBrightness(-BRIGHTNESS_DELTA)
 	#F12::BrightnessSetter.SetBrightness(BRIGHTNESS_DELTA)
@@ -467,7 +496,7 @@ OutputDebug, GameSpecifics loaded
 ; MOUSE-KEY BINDINGS
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 #if MOUSE_MEDIA_CONTROL_ENABLED && INVERT_SCROLL
-	^#WheelDown::Volume_UP	; CTRL + WIN + SCROLL_DOWN raised volume
+	^#WheelDown::Volume_Up	; CTRL + WIN + SCROLL_DOWN raised volume
 	^#WheelUp::Volume_Down		; CTRL + WIN + SCROLL_UP lowers volume
 	^+#WheelDown::Media_Next	; CTRL + SHIFT + WIN + SCROLL_DOWN goes to next track
 	^+#WheelUp::Media_Prev	; CTRL + SHIFT + WIN + SCROLL_UP goes to previous track

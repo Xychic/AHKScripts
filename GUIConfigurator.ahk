@@ -106,7 +106,7 @@ Loop, Read, %srcFile%   ; Read the config file line by line
             preTextArray.Insert(dataArraySize, SubStr(A_LoopReadLine, 1, pos1))
             postTextArray.Insert(dataArraySize, SubStr(A_LoopReadLine, pos2-1))
 
-            Gui, 1:Add, Edit, x+2 -wrap Number Limit5 v%varName% w245 r1, %currText%
+            Gui, 1:Add, Edit, x+2 -wrap Number Limit7 v%varName% w245 r1, %currText%
 
 
         } else if InStr(A_LoopReadLine, "(Array)") {
