@@ -276,6 +276,16 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 		Process, Exist, %Name%
 		return Errorlevel
 	}
+
+	showVolumeOSD() {
+		try if ((shellProvider := ComObjCreate("{C2F03A33-21F5-47FA-B4BB-156362A2F239}", "{00000000-0000-0000-C000-000000000046}"))) {
+			try if ((flyoutDisp := ComObjQuery(shellProvider, "{41f9d2fb-7834-4ab6-8b1b-73e74064b465}", "{41f9d2fb-7834-4ab6-8b1b-73e74064b465}"))) {
+					DllCall(NumGet(NumGet(flyoutDisp+0)+3*A_PtrSize), "Ptr", flyoutDisp, "Int", 0, "UInt", 0)
+				,ObjRelease(flyoutDisp)
+			}
+			ObjRelease(shellProvider)
+		}
+	}
 }
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; AUTO-EXECUTE
@@ -305,7 +315,6 @@ return
 ; Include Extra hotkeys after auto-execute
 #Include, %A_ScriptDir%/GameSpecifics.ahk
 OutputDebug, GameSpecifics loaded
-; TODO https://www.autohotkey.com/boards/viewtopic.php?t=26921&p=126135
 {	; AHK Compatability
 	^+SPACE:: 	; CTRL + SHIFT + SPACE will reload the script TODO add reload to all scripts
 		if (RELOAD_TRAYTIP) {
@@ -443,21 +452,25 @@ OutputDebug, GameSpecifics loaded
 	; ; #V
 
 	#Volume_Mute::	; WIN + MUTE mutes microphone
+		showVolumeOSD()
 		Soundset, +50, Master, Mute, MIC_MIXER_NO
 		return
 	#Volume_Up::	; WIN + MUTE mutes microphone
+		showVolumeOSD()
 		Soundset, +5, Master, Volume, MIC_MIXER_NO
 		return
 	#Volume_Down::	; WIN + MUTE mutes microphone
+		showVolumeOSD()
+
 		Soundset, -5, Master, Volume, MIC_MIXER_NO
 		return
 	$F24::
-		If ProcessExist("Discord.exe")
+		If ProcessExist("Discord.exe") {
 			Send, {F24}
-		else
-			Send, {Volume_Down}
-			Send, {Volume_Up}
-			Soundset, +50, Master, Mute, MIC_MIXER_NO
+		} else {
+			showVolumeOSD()
+			SoundSet, +50, Master, Mute, MIC_MIXER_NO
+		}
 		return
 
 	^#DEL::		; CTRL + WIN + DEL will open shutdown dialogue
@@ -465,6 +478,7 @@ OutputDebug, GameSpecifics loaded
 		FileDelete, %fpath%
 		FileAppend,CreateObject("Shell.Application").ShutdownWindows,%fpath%
 		RunWait wscript.exe %fpath%
+		WinActivate, Explorer
 		Return
 
 	^+¬::Run, C:\Windows\System32\Taskmgr.exe ; CTRL + SHIFT + GRAVE will open task manager
@@ -549,6 +563,15 @@ OutputDebug, GameSpecifics loaded
 			MouseClick, WheelUp
 			Sleep %SCROLL_DELAY%
 		}
+	
+	; !+Del::
+	; 	autoClicker := True
+	; 	loop {
+	; 		if !autoClicker
+	; 			Return
+	; 		Send, {Shift}
+	; 		Sleep %SCROLL_DELAY%
+	; 	}
 #if
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
