@@ -9,6 +9,7 @@ OutputDebug, Configurator loaded
 #Include, %A_ScriptDir%/BrightnessSetter.ahk
 OutputDebug, BrightnessSetter loaded
 
+
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Settings
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -233,6 +234,12 @@ global ENQUOTE_BLACKLIST, ROWS, COLUMNS, TOTAL_DESKTOPS, INITIAL_DESKTOP, PREFER
 		return defaultPath	; If no path is found, return default
 	}
 
+	updateSettings(profile, targetDir) {
+		command := "py " . A_ScriptDir . "/setDir.py" . " " . profile . " " . targetDir
+		runCommand(command)
+		return
+	}
+
 	UriEncode(uri) {
 		VarSetCapacity(Var, StrPut(uri, "UTF-8"), 0)
 		StrPut(uri, &Var, "UTF-8")
@@ -392,8 +399,13 @@ OutputDebug, GameSpecifics loaded
 #if
 
 #if WINDOWS_FUNCTIONS_ENABLED	; WindowsFunctions
+	; ^!T::	; CTRL + ALT + T opens cmd shell at current directory
+	; 	currentDir := getActiveExplorerPath()
+	; 	Run, %PREFERED_SHELL%, %currentDir%
+	; 	return
 	^!T::	; CTRL + ALT + T opens cmd shell at current directory
 		currentDir := getActiveExplorerPath()
+		updateSettings(PROFILE_LOCATION, currentDir)
 		Run, %PREFERED_SHELL%, %currentDir%
 		return
 
